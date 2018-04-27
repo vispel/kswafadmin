@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+
+	">
+
+    <context:component-scan base-package="com.ks" />
+	<context:annotation-config />
+	<context:spring-configured />
+	<mvc:annotation-driven />
+    <mvc:default-servlet-handler/>
+
+    <mvc:resources mapping="/static-resources/**"
+                   location="/static-resources/" cache-period="3600"/>
+
+    <!-- Thymeleaf View Resolver - implementation of Spring's ViewResolver interface -->
+    <bean id="viewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <property name="characterEncoding" value="UTF-8" />
+        <property name="contentType" value="text/html; charset=UTF-8"/>
+    </bean>
+
+    <!-- Thymeleaf Template Engine (Spring4-specific version) -->
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolvers">
+            <set>
+                <ref bean="templateResolver" />
+            </set>
+        </property>
+        <property name="additionalDialects">
+            <set>
+                <bean class="nz.net.ultraq.thymeleaf.LayoutDialect"/>
+                <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect"/>
+            </set>
+
+        </property>
+    </bean>
+
+    <!-- Thymeleaf Template Resolver -->
+    <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/pages/" />
+        <property name="suffix" value=".html" />
+        <property name="characterEncoding" value="UTF-8" />
+        <property name="templateMode" value="HTML" />
+        <property name="cacheable" value="true" />
+    </bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource"
+		p:basenames="messages">
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+	<!-- Declare the Interceptor -->
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+			p:paramName="lang" />
+	</mvc:interceptors>
+
+	<!-- Declare the Resolver -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
+        <property name="defaultLocale" value="pl" />
+        <property name="cookieName" value="wafLang"/>
+        <property name="cookieMaxAge" value="2147483647"/>
+
+    </bean>
+
+    <bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.h2.Driver" />
+        <property name="url" value="jdbc:h2:file:C:/testDb/kswafdb;INIT=runscript from 'C:/testDb/schema.sql'" />
+        <property name="username" value="sa" />
+    </bean>
+
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource" />
+    </bean>
+
+</beans>

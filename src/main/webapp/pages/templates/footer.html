@@ -1,0 +1,7 @@
+<footer th:fragment="footer" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<div>Copyright © KS-WAF 2017</div>
+	<ul sec:authorize="isAuthenticated()">
+		<li><a href="#" id="bt-help" th:text="#{footer.menu.help}"></a></li>
+		<li><a href="#" id="bt-contact" th:text="#{footer.menu.contact}"></a></li>
+	</ul>
+</footer>

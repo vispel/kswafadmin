@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<th:block th:replace="templates/head"></th:block>
+</head>
+<body th:data-context="@{/}">
+    <header th:replace="templates/header"/>
+	<div class="col-2">
+		<main layout:fragment="content" class="content"></main>
+	</div>
+</body>
+<footer th:replace="templates/footer" class="footer"></footer>
+</html>

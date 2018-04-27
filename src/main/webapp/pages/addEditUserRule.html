@@ -1,0 +1,80 @@
+<main layout:decorate="~{templates/templateMain}" layout:fragment="content"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                    <a th:href="@{/admin/list/signature}" class="btn btn-primary btn-lg raised"> <span class="fa fa-arrow-circle-o-left" th:text="#{button.back.to.list}"></span></a>
+                    <th:block th:switch="${userRule.id==null}">
+                        <div th:case="true">
+                            <h1 th:text="#{add.new.signature}"></h1>
+                        </div>
+                        <div th:case="false">
+                            <h1 th:text="#{edit.signature}"></h1>
+                        </div>
+                    </th:block>
+            </div>
+        </div>
+        <div class="row">
+            <div class="alert alert-danger col-sm-7" th:if="${errorMsg} != null">
+                <span class="glyphicon glyphicon-exclamation-sign "></span>	<span th:text="${errorMsg}"></span>
+            </div>
+            <div class="alert alert-success col-sm-7" th:if="${infoMsg} != null">
+                <span class="glyphicon glyphicon-exclamation-sign "></span>	<span th:text="${infoMsg}"></span>
+            </div>
+        </div>
+        <form method="POST" th:action="@{userRule.id==null ? '/admin/add/signature' : '/admin/edit/signature/'+userRule.id}" id="addEditUserRule" th:attr="data-language=${#locale.language}" th:object="${userRule}">
+            <span th:if="${error != null}" th:text="${error}" class="error"></span>
+            <ul>
+
+                <div class="form-group">
+                    <label for="ruleType" th:text="#{add.signature.rule.type}"></label>
+                    <select class="form-control" id="ruleType" th:field="*{ruleType}">
+                        <option th:each="ruleType : ${ruleTypes}" th:value="${ruleType.value}" th:text="${ruleType.key}"></option>
+                    </select>
+                </div>
+                <div class="form-group"><label for="description" th:text="#{add.signature.description}"></label><input id="description" name="description" th:field="*{description}" type="text" th:placeholder="#{add.signature.description}"  class="form-control"></div>
+                <div class="form-group"><label for="servletPath" th:text="#{add.signature.servlet.path}"></label><input id="servletPath" name="servletPath" type="text" th:placeholder="#{add.signature.servlet.path}"  th:field="*{servletPathOrRequestUri}" class="form-control"></div>
+                <div class="form-group">
+                    <label for="signature" th:text="#{add.signature.signature}"></label>
+                    <textarea class="form-control" rows="5" id="signature" th:field="*{queryString}"></textarea>
+                </div>
+                <hr/>
+                <div class="form-group">
+                    <div class="page-header">
+                        <h1 th:text="#{add.signature.optional.parameter}"></h1>
+                    </div>
+                </div>
+                <div class="form-group"><label for="contextPath" th:text="#{add.signature.contextPath}"></label><input id="contextPath" name="contextPath" th:field="*{contextPath}" type="text" th:placeholder="#{add.signature.contextPath}"  class="form-control"></div>
+                <div class="form-group"><label for="remoteAddr" th:text="#{add.signature.remote.address}"></label><input id="remoteAddr" name="remoteAddr" type="text" th:placeholder="#{add.signature.remote.address}"  th:field="*{remoteAddr}" class="form-control"></div>
+                <div class="form-group"><label for="remoteHost" th:text="#{add.signature.remote.host}"></label><input id="remoteHost" name="remoteHost" type="text" th:placeholder="#{add.signature.remote.host}"  th:field="*{remoteHost}" class="form-control"></div>
+                <div class="form-group"><label for="remoteUser" th:text="#{add.signature.remote.user}"></label><input id="remoteUser" name="remoteUser" type="text" th:placeholder="#{add.signature.remote.user}"  th:field="*{remoteUser}" class="form-control"></div>
+                <div class="form-group"><label for="authType" th:text="#{add.signature.auth.type}"></label><input id="authType" name="authType" type="text" th:placeholder="#{add.signature.auth.type}"  th:field="*{authType}" class="form-control"></div>
+                <div class="form-group"><label for="scheme" th:text="#{add.signature.scheme}"></label><input id="scheme" name="scheme" type="text" th:placeholder="#{add.signature.scheme}" th:field="*{scheme}" class="form-control"></div>
+                <div class="form-group">
+                    <label for="method" th:text="#{add.signature.method}"></label>
+                    <select class="form-control" id="method" th:field="*{method}">
+                        <option th:each="method : ${ {'GET','POST','DELETE','PUT','HEAD','CONNECT','OPTIONS','TRACE','PATCH'} }" th:value="${method}" th:text="${method}"></option>
+                    </select>
+                </div>
+                <!--<div class="form-group"><label for="method" th:text="#{add.signature.method}"></label><input id="method" name="method" type="text" th:placeholder="#{add.signature.method}"  th:field="*{method}" class="form-control"></div>-->
+                <div class="form-group"><label for="mimeType" th:text="#{add.signature.mimeType}"></label><input id="mimeType" name="mimeType" type="text" th:placeholder="#{add.signature.mimeType}"  th:field="*{mimeType}" class="form-control"></div>
+                <div class="form-group"><label for="encoding" th:text="#{add.signature.encoding}"></label><input id="encoding" name="encoding" type="text" th:placeholder="#{add.signature.encoding}"  th:field="*{encoding}" class="form-control"></div>
+                <div class="form-group"><label for="header" th:text="#{add.signature.header}"></label><input id="header" name="header" type="text" th:placeholder="#{add.signature.header}"  th:field="*{header}" class="form-control"></div>
+                <div class="form-group"><label for="requestURL" th:text="#{add.signature.request.url}"></label><input id="requestURL" name="requestURL" type="text" th:placeholder="#{add.signature.request.url}"  th:field="*{requestURL}" class="form-control"></div>
+                <div class="form-group"><label for="requestURI" th:text="#{add.signature.request.uri}"></label><input id="requestURI" name="requestURI" type="text" th:placeholder="#{add.signature.request.uri}"  th:field="*{requestURI}" class="form-control"></div>
+                <div class="form-group"><label for="serverName" th:text="#{add.signature.server.name}"></label><input id="serverName" name="serverName" type="text" th:placeholder="#{add.signature.server.name}"  th:field="*{serverName}" class="form-control"></div>
+                <div class="form-group"><label for="cookie" th:text="#{add.signature.cookie}"></label><input id="cookie" name="cookie" type="text" th:placeholder="#{add.signature.cookie}"  th:field="*{cookie}" class="form-control"></div>
+                <div class="form-group"><label for="requestParam" th:text="#{add.signature.request.param}"></label><input id="requestParam" name="requestParam" type="text" th:placeholder="#{add.signature.request.param}"  th:field="*{requestParam}" class="form-control"></div>
+                <div class="form-check"><input type="checkbox" class="form-check-input" id="enabled"  th:field="*{enabled}" ><label class="form-check-label" for="enabled" th:text="#{add.signature.enable}"></label></div>
+
+                <hr/>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block raised">
+                        <span th:text="#{button.save}"></span>
+                    </button>
+                </div>
+            </ul>
+        </form>
+    </div>
+</main>

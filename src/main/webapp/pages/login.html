@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="templates/head"></th:block>
+</head>
+
+<body class="login">
+<header th:replace="templates/header"/>
+<div class="container">
+    <div class="row" style="margin-top:20px">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form th:action="@{/login}" method="post">
+                <fieldset>
+                    <h1 th:text="#{sign.in}"></h1>
+                    <div th:if="${error != null}">
+                        <div class="alert alert-danger" th:text="${error}"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" name="username" id="username" class="form-control input-lg"
+                               placeholder="UserName" required="true" autofocus="true"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" id="password" class="form-control input-lg"
+                               placeholder="Password" required="true"/>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <span id="loader" class="fa fa-circle-o-notch fa-spin loaderIcon"></span><input type="submit" class="btn btn-lg btn-primary btn-block" th:value="#{sign.in}"/>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <span class="fa fa-hand-o-right"><a href="#" th:text="#{forgot.password}">Forgot password?</a></span>
+                        </div>
+                    </div>
+
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+
+</html>

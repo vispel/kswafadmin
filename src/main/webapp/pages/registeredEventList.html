@@ -1,0 +1,52 @@
+<main layout:decorate="~{templates/templateMain}" layout:fragment="content"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                <th:block th:switch="${isArchive}">
+                    <div th:case="true">
+                        <h1 th:text="#{list.registered.event.archive}"></h1>
+                    </div>
+                    <div th:case="false">
+                        <h1 th:text="#{registered.event.list}"></h1>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+        <div class="row" th:if="${#lists.isEmpty(registeredEvents)}">
+            <p class="lead" th:text="#{empty.list}"></p>
+        </div>
+        <div class="row" th:if="${!isArchive}">
+            <div class="starter-template">
+                <a th:href="@{/admin/list/archive/registered/event}" class="btn btn-primary btn-lg raised">
+                    <span class="fa fa-archive"></span><span th:text="#{list.registered.event.archive}"> </span>
+                </a>
+            </div>
+        </div>
+        <div class="row" th:if="${!#lists.isEmpty(registeredEvents)}">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <th th:text="#{registered.event.parameter}"></th>
+                        <th th:text="#{registered.event.value}"></th>
+                        <th th:text="#{registered.event.ip}"></th>
+                        <th th:text="#{registered.event.date}"></th>
+                        <th th:text="#{button.delete}"></th>
+                    </thead>
+                    <tbody class="table table-hover">
+                        <tr th:each="registeredEvent : ${registeredEvents}" th:attr="id=${registeredEvent.id}">
+                            <td th:text="${registeredEvent.parameter}"></td>
+                            <td th:text="${registeredEvent.value}"></td>
+                            <td th:text="${registeredEvent.ip}"></td>
+                            <td th:text="${registeredEvent.date}"></td>
+                            <td> <a th:href="@{/admin/delete/registered/event}" class="btn btn-primary btn-lg raised">
+                                <span class="fa fa-plus"></span><span th:text="#{button.delete}"> </span>
+                            </a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

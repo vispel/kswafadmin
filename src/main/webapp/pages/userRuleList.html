@@ -1,0 +1,76 @@
+<main layout:decorate="~{templates/templateMain}" layout:fragment="content"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                <h1 th:text="#{list.signature}">Lista sygnatur</h1>
+            </div>
+        </div>
+        <div class="row" th:if="${#lists.isEmpty(userRules)}">
+            <p class="lead" th:text="#{empty.list}"></p>
+        </div>
+        <div class="row">
+            <div class="starter-template">
+                <a th:href="@{/admin/add/signature}" class="btn btn-primary raised">
+                    <span class="fa fa-plus"></span><span th:text="#{button.add}"> </span>
+                </a>
+            </div>
+        </div>
+        <hr align="center">
+        <div class="row" th:if="${!#lists.isEmpty(userRules)}">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="userRulesTable">
+                    <thead>
+                        <th th:text="#{add.signature.rule.type}"></th>
+                        <th th:text="#{add.signature.description}"></th>
+                        <th th:text="#{add.signature.servlet.path}"></th>
+                        <th th:text="#{add.signature.signature}"></th>
+                        <th th:text="#{add.signature.contextPath}"></th>
+                        <th th:text="#{add.signature.remote.address}"></th>
+                        <th th:text="#{add.signature.remote.host}"></th>
+                        <th th:text="#{add.signature.remote.user}"></th>
+                        <th th:text="#{add.signature.auth.type}"></th>
+                        <th th:text="#{add.signature.scheme}"></th>
+                        <th th:text="#{add.signature.method}"></th>
+                        <th th:text="#{add.signature.mimeType}"></th>
+                        <th th:text="#{add.signature.encoding}"></th>
+                        <th th:text="#{add.signature.header}"></th>
+                        <th th:text="#{add.signature.request.url}"></th>
+                        <th th:text="#{add.signature.request.uri}"></th>
+                        <th th:text="#{add.signature.server.name}"></th>
+                        <th th:text="#{add.signature.cookie}"></th>
+                        <th th:text="#{add.signature.request.param}"></th>
+                        <th th:text="#{add.signature.enable}"></th>
+                        <th th:text="#{button.delete}"></th>
+                    </thead>
+                    <tbody>
+                        <tr th:each="userRule : ${userRules}" th:attr="id=${userRule.id}">
+                            <td th:text="${userRule.ruleType}"></td>
+                            <td th:text="${userRule.description}"></td>
+                            <td th:text="${userRule.servletPathOrRequestUri}"></td>
+                            <td th:text="${userRule.queryString}"></td>
+                            <td th:text="${userRule.remoteAddr}"></td>
+                            <td th:text="${userRule.remoteHost}"></td>
+                            <td th:text="${userRule.remoteUser}"></td>
+                            <td th:text="${userRule.authType}"></td>
+                            <td th:text="${userRule.scheme}"></td>
+                            <td th:text="${userRule.mimeType}"></td>
+                            <td th:text="${userRule.encoding}"></td>
+                            <td th:text="${userRule.header}"></td>
+                            <td th:text="${userRule.requestURL}"></td>
+                            <td th:text="${userRule.requestURI}"></td>
+                            <td th:text="${userRule.serverName}"></td>
+                            <td th:text="${userRule.cookie}"></td>
+                            <td th:text="${userRule.requestParam}"></td>
+                            <td th:text="${userRule.enabled}"></td>
+                            <td> <a th:href="@{/admin/delete/signature}" class="btn btn-primary btn-sm raised">
+                                <span class="fa fa-trash-o"></span><span th:text="#{button.delete}"> </span>
+                            </a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

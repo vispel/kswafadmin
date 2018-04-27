@@ -1,0 +1,27 @@
+<header th:fragment="header">
+    <!-- this is header -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" th:href="@{/}">KS-WAF</a>
+            </div>
+            <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+                <li><a th:href="@{/admin/list/registered/event}" th:text="#{nav.event.registration.module}"></a></li>
+                <li><a th:href="@{/admin/list/signature}" th:text="#{nav.security.policies}"></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="language"><a href="?lang=pl" th:classappend="${#locale.language=='pl'} ? active : _">PL</a></li>
+                <li class="language"><a href="?lang=en" th:classappend="${#locale.language=='en'} ? active : _">EN</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <a aria-expanded="false" aria-haspopup="true"
+                            class="btn dropdown-toggle" data-toggle="dropdown"
+                            id="dropdownMenuButton" type="button"><span class="fa fa-user"></span><span sec:authentication="name"></span></a>
+                    <ul aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                        <li><a th:href="@{/admin/change/password}" th:text="#{header.change.password}"></a></li>
+                        <li><a th:href="@{/logout}"><span class="fa fa-sign-out"></span><span th:text="#{header.menu.sing.out}"></span> </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

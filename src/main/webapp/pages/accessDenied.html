@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="templates/head :: head"/>
+<body class="login">
+<div th:replace="templates/header :: header"/>
+<div class="container">
+
+    <div class="starter-template">
+        <h1>403 - Access is denied</h1>
+        <div th:inline="text">Hello '[[${#httpServletRequest.remoteUser}]]',
+            you do not have permission to access this page.</div>
+    </div>
+
+</div>
+</body>
+
+</html>
