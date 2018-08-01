@@ -32,6 +32,64 @@
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
+    <!--==================================================================================================================================-->
+    <!-- KsWaf Security Filter  -->
+    <!--==================================================================================================================================-->
+    <filter>
+        <filter-name>KsWafFilter</filter-name>
+        <filter-class>com.ks.KsWafFilter</filter-class>
+        <init-param>
+            <param-name>ApplicationName</param-name>
+            <param-value>ApplicationName</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ProductionMode</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DefaultAttackLoggerDirectory</param-name>
+            <param-value>/tmp/KsWaf/logs</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DatabaseDirectory</param-name>
+            <param-value>/tmp/KsWaf/database</param-value>
+        </init-param>
+        <init-param>
+            <param-name>RedirectWelcomePage</param-name>
+            <param-value>/app/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>HandleUncaughtException</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>BlockNonLocalRedirects</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>QueryStringEncryption</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>SecretTokenLinkInjection</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ParameterAndFormProtection</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>LogVerboseForDevelopmentMode</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>KsWafFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
 
 
     <filter>
@@ -76,59 +134,4 @@
 		<session-timeout>9999</session-timeout>
 	</session-config>
 
-
-    <!--==================================================================================================================================-->
-    <!-- KsWaf Security Filter  -->
-    <!--==================================================================================================================================-->
-<!--    <filter>
-        <filter-name>KsWafFilter</filter-name>
-        <filter-class>com.com.ks.filter.KsWafFilter</filter-class>
-        <init-param>
-            <param-name>ApplicationName</param-name>
-            <param-value>ApplicationName</param-value>
-        </init-param>
-        <init-param>
-            <param-name>ProductionMode</param-name>
-            <param-value>false</param-value>
-        </init-param>
-        <init-param>
-            <param-name>AttackLogDirectory</param-name>
-            <param-value>/tmp/KsWaf/logs</param-value>
-        </init-param>
-        <init-param>
-            <param-name>DatabaseDirectory</param-name>
-            <param-value>/tmp/KsWaf/database</param-value>
-        </init-param>
-        <init-param>
-            <param-name>RedirectWelcomePage</param-name>
-            <param-value>/app/</param-value>
-        </init-param>
-        <init-param>
-            <param-name>HandleUncaughtException</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>BlockNonLocalRedirects</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>QueryStringEncryption</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>ParameterAndFormProtection</param-name>
-            <param-value>false</param-value>
-        </init-param>
-        <init-param>
-            <param-name>LogVerboseForDevelopmentMode</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>KsWafFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>INCLUDE</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>-->
 </web-app>
